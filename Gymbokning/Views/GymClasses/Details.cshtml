@@ -38,9 +38,9 @@
             Attending Members
         </dt>
         <dd class="col-sm-10">
-            @foreach (var attendee in Model.AttendingMembers.Select(am => am.ApplicationUser))
+            @foreach (var member in Model.AttendingMembers)
             {
-            <div>@attendee.Email</div>
+                <div>@member.ApplicationUser.Email</div>
             }
         </dd>
     </dl>
