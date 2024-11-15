@@ -29,7 +29,7 @@ namespace Gymbokning.Models
         public string Description { get; set; }
 
         // Navigation property for the many-to-many relationship
-        public ICollection<ApplicationUserGymClass> AttendingMembers { get; set; }
+        public ICollection<ApplicationUserGymClass> AttendingMembers { get; set; } = new List<ApplicationUserGymClass>();
 
 
     }
