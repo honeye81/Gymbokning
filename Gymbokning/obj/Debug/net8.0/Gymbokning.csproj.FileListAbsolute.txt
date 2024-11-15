@@ -275,6 +275,7 @@ C:\Users\moha\source\repos\Gymbokning\Gymbokning\obj\Debug\net8.0\Gymbokning.Mvc
 C:\Users\moha\source\repos\Gymbokning\Gymbokning\obj\Debug\net8.0\Gymbokning.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\moha\source\repos\Gymbokning\Gymbokning\obj\Debug\net8.0\Gymbokning.RazorAssemblyInfo.cache
 C:\Users\moha\source\repos\Gymbokning\Gymbokning\obj\Debug\net8.0\Gymbokning.RazorAssemblyInfo.cs
+C:\Users\moha\source\repos\Gymbokning\Gymbokning\obj\Debug\net8.0\Gymbokning.sourcelink.json
 C:\Users\moha\source\repos\Gymbokning\Gymbokning\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\moha\source\repos\Gymbokning\Gymbokning\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\moha\source\repos\Gymbokning\Gymbokning\obj\Debug\net8.0\staticwebassets\msbuild.Gymbokning.Microsoft.AspNetCore.StaticWebAssets.props
@@ -291,4 +292,3 @@ C:\Users\moha\source\repos\Gymbokning\Gymbokning\obj\Debug\net8.0\refint\Gymbokn
 C:\Users\moha\source\repos\Gymbokning\Gymbokning\obj\Debug\net8.0\Gymbokning.pdb
 C:\Users\moha\source\repos\Gymbokning\Gymbokning\obj\Debug\net8.0\Gymbokning.genruntimeconfig.cache
 C:\Users\moha\source\repos\Gymbokning\Gymbokning\obj\Debug\net8.0\ref\Gymbokning.dll
-C:\Users\moha\source\repos\Gymbokning\Gymbokning\obj\Debug\net8.0\Gymbokning.sourcelink.json
