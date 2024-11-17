@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Gymbokning.Data;
 using Gymbokning.Models;
 using Microsoft.AspNetCore.Identity;
-
+using Microsoft.AspNetCore.Authorization;  
 
 namespace Gymbokning.Controllers
 {
@@ -17,12 +17,11 @@ namespace Gymbokning.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public GymClassesController(ApplicationDbContext context,UserManager<ApplicationUser> userManager)
+        public GymClassesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
-
 
         // GET: GymClasses
         public async Task<IActionResult> Index()
@@ -46,6 +45,7 @@ namespace Gymbokning.Controllers
         }
 
         // GET: GymClasses/Details/5
+        [Authorize]  
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -55,9 +55,8 @@ namespace Gymbokning.Controllers
 
             var gymClass = await _context.GymClass
                 .Include(g => g.AttendingMembers)
-                .ThenInclude(e => e.ApplicationUser)    
+                .ThenInclude(e => e.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
-
 
             if (gymClass == null)
             {
@@ -68,24 +67,22 @@ namespace Gymbokning.Controllers
         }
 
         // GET: GymClasses/Create
+        [Authorize]  
         public IActionResult Create()
         {
             return View();
         }
 
         // POST: GymClasses/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize] 
         public async Task<IActionResult> Create([Bind("Id,Name,StartTime,Duration,Description")] GymClass gymClass)
         {
-            // Remove AttendingMembers from ModelState since we don't need to validate it during creation
             ModelState.Remove("AttendingMembers");
 
             if (ModelState.IsValid)
             {
-                // Initialize AttendingMembers if it's null
                 if (gymClass.AttendingMembers == null)
                 {
                     gymClass.AttendingMembers = new List<ApplicationUserGymClass>();
@@ -98,8 +95,8 @@ namespace Gymbokning.Controllers
             return View(gymClass);
         }
 
-
         // GET: GymClasses/Edit/5
+        [Authorize]  
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -116,10 +113,9 @@ namespace Gymbokning.Controllers
         }
 
         // POST: GymClasses/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize] 
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StartTime,Duration,Description")] GymClass gymClass)
         {
             if (id != gymClass.Id)
@@ -151,6 +147,7 @@ namespace Gymbokning.Controllers
         }
 
         // GET: GymClasses/Delete/5
+        [Authorize]  
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -171,6 +168,7 @@ namespace Gymbokning.Controllers
         // POST: GymClasses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize] 
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var gymClass = await _context.GymClass.FindAsync(id);
@@ -183,6 +181,7 @@ namespace Gymbokning.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]  
         public async Task<IActionResult> BookingToggle(int? id)
         {
             if (id == null)
@@ -190,14 +189,12 @@ namespace Gymbokning.Controllers
                 return NotFound();
             }
 
-            // Get the current user
             var userId = _userManager.GetUserId(User);
             if (userId == null)
             {
                 return NotFound();
             }
 
-            // Get the gym class including its attending members
             var gymClass = await _context.GymClasses
                 .Include(g => g.AttendingMembers)
                 .FirstOrDefaultAsync(g => g.Id == id);
@@ -207,13 +204,11 @@ namespace Gymbokning.Controllers
                 return NotFound();
             }
 
-            // Check if the user is already booked
             var attending = await _context.Set<ApplicationUserGymClass>()
                 .FirstOrDefaultAsync(a => a.ApplicationUserId == userId && a.GymClassId == id);
 
             if (attending == null)
             {
-                // Book the user
                 var booking = new ApplicationUserGymClass
                 {
                     ApplicationUserId = userId,
@@ -223,7 +218,6 @@ namespace Gymbokning.Controllers
             }
             else
             {
-                // Unbook the user
                 _context.Remove(attending);
             }
 
